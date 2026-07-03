@@ -1,0 +1,15 @@
+node_modules
+.next
+.git
+.husky
+coverage
+playwright-report
+test-results
+.env
+.env.local
+.env.*.local
+*.log
+README.md
+AGENTS.md
+CLAUDE.md
+e2e
