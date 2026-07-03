@@ -4,7 +4,7 @@ import { formatDistanceToNow } from "@/lib/format-date";
 import { AtSign, Bell, FileText, Kanban, MessageSquare } from "lucide-react";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -37,22 +37,19 @@ export function NotificationBell() {
   return (
     <Popover>
       <PopoverTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative"
-            aria-label="Notifications"
-          >
-            <Bell className="size-4" />
-            {unreadCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-white">
-                {unreadCount > 9 ? "9+" : unreadCount}
-              </span>
-            )}
-          </Button>
-        }
-      />
+        className={cn(
+          buttonVariants({ variant: "ghost", size: "icon" }),
+          "relative",
+        )}
+        aria-label="Notifications"
+      >
+        <Bell className="size-4" />
+        {unreadCount > 0 && (
+          <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-white">
+            {unreadCount > 9 ? "9+" : unreadCount}
+          </span>
+        )}
+      </PopoverTrigger>
       <PopoverContent align="end" className="w-96 p-0">
         <div className="flex items-center justify-between border-b px-4 py-3">
           <p className="text-sm font-medium">Notifications</p>

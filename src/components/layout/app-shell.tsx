@@ -14,10 +14,11 @@ import { usePathname } from "next/navigation";
 import { Logo } from "@/components/common/logo";
 import { ThemeToggle } from "@/components/common/theme-toggle";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -147,27 +148,29 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <NotificationBell />
             <ThemeToggle />
             <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button
-                  variant="ghost"
-                  className="relative size-9 rounded-full p-0"
-                >
-                  <Avatar>
-                    <AvatarFallback>
-                      {user ? getInitials(user.full_name) : "?"}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
+              <DropdownMenuTrigger
+                className={cn(
+                  buttonVariants({ variant: "ghost" }),
+                  "relative size-9 rounded-full p-0",
+                )}
+              >
+                <Avatar>
+                  <AvatarFallback>
+                    {user ? getInitials(user.full_name) : "?"}
+                  </AvatarFallback>
+                </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>
-                  <div className="flex flex-col">
-                    <span className="font-medium">{user?.full_name}</span>
-                    <span className="text-xs font-normal text-muted-foreground">
-                      {user?.email}
-                    </span>
-                  </div>
-                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel>
+                    <div className="flex flex-col">
+                      <span className="font-medium">{user?.full_name}</span>
+                      <span className="text-xs font-normal text-muted-foreground">
+                        {user?.email}
+                      </span>
+                    </div>
+                  </DropdownMenuLabel>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => logout.mutate()}

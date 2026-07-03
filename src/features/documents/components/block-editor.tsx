@@ -2,7 +2,7 @@
 
 import { Plus, Trash2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -140,11 +140,11 @@ export function AddBlockMenu({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button variant="outline" size="sm">
-          <Plus className="size-4" />
-          Add block
-        </Button>
+      <DropdownMenuTrigger
+        className={buttonVariants({ variant: "outline", size: "sm" })}
+      >
+        <Plus className="size-4" />
+        Add block
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
         {BLOCK_TYPES.map((blockType) => (

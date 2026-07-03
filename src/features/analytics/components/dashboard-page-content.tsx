@@ -16,9 +16,8 @@ import Link from "next/link";
 
 export function DashboardPageContent() {
   const { data, isLoading } = useGlobalAnalytics();
-  const recentNotifications = useNotificationStore((state) =>
-    state.notifications.slice(0, 5),
-  );
+  const notifications = useNotificationStore((state) => state.notifications);
+  const recentNotifications = notifications.slice(0, 5);
 
   return (
     <div className="space-y-6">

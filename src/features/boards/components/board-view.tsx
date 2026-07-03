@@ -13,7 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,10 +41,10 @@ function BoardHeader({ workspaceId, board }: BoardHeaderProps) {
         <h1 className="font-semibold">{board.name}</h1>
       </div>
       <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button variant="ghost" size="icon-sm">
-            <MoreHorizontal className="size-4" />
-          </Button>
+        <DropdownMenuTrigger
+          className={buttonVariants({ variant: "ghost", size: "icon-sm" })}
+        >
+          <MoreHorizontal className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem

@@ -2,10 +2,11 @@
 
 import { Check, ChevronsUpDown, Plus } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -41,37 +42,36 @@ export function WorkspaceSwitcher({ collapsed }: WorkspaceSwitcherProps) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button
-          variant="outline"
-          className={cn(
-            "justify-between gap-2",
-            collapsed ? "size-9 px-0" : "w-full",
-          )}
-        >
-          <span className={cn("truncate", collapsed && "sr-only")}>
-            {activeWorkspace?.name ?? "Select workspace"}
-          </span>
-          <ChevronsUpDown className="size-4 shrink-0 opacity-60" />
-        </Button>
+      <DropdownMenuTrigger
+        className={cn(
+          buttonVariants({ variant: "outline" }),
+          "justify-between gap-2",
+          collapsed ? "size-9 px-0" : "w-full",
+        )}
+      >
+        <span className={cn("truncate", collapsed && "sr-only")}>
+          {activeWorkspace?.name ?? "Select workspace"}
+        </span>
+        <ChevronsUpDown className="size-4 shrink-0 opacity-60" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-64">
-        <DropdownMenuLabel>Workspaces</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {workspaces?.map((workspace) => (
-          <DropdownMenuItem
-            key={workspace.id}
-            onClick={() => setActiveWorkspace(workspace.id)}
-          >
-            <span className="flex-1 truncate">{workspace.name}</span>
-            {workspace.id === activeWorkspaceId && (
-              <Check className="size-4 text-primary" />
-            )}
-          </DropdownMenuItem>
-        ))}
-        {workspaces?.length === 0 && (
-          <DropdownMenuItem disabled>No workspaces yet</DropdownMenuItem>
-        )}
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Workspaces</DropdownMenuLabel>
+          {workspaces?.map((workspace) => (
+            <DropdownMenuItem
+              key={workspace.id}
+              onClick={() => setActiveWorkspace(workspace.id)}
+            >
+              <span className="flex-1 truncate">{workspace.name}</span>
+              {workspace.id === activeWorkspaceId && (
+                <Check className="size-4 text-primary" />
+              )}
+            </DropdownMenuItem>
+          ))}
+          {workspaces?.length === 0 && (
+            <DropdownMenuItem disabled>No workspaces yet</DropdownMenuItem>
+          )}
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <CreateWorkspaceDialog
           trigger={

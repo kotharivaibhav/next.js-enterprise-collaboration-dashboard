@@ -4,7 +4,7 @@ import { MoreHorizontal, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -147,10 +147,13 @@ export function WorkspaceMembersTable({
                   <TableCell className="text-right">
                     {canRemove ? (
                       <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <Button variant="ghost" size="icon-sm">
-                            <MoreHorizontal className="size-4" />
-                          </Button>
+                        <DropdownMenuTrigger
+                          className={buttonVariants({
+                            variant: "ghost",
+                            size: "icon-sm",
+                          })}
+                        >
+                          <MoreHorizontal className="size-4" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem

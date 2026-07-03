@@ -1,32 +1,29 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect } from "react";
 
 import { useAuthStore } from "@/store/auth-store";
-import { useTypingStore } from "@/store/typing-store";
+import { selectChannelTypers, useTypingStore } from "@/store/typing-store";
 
 interface TypingIndicatorProps {
   channelId: string;
 }
 
-function subscribeToClock(onStoreChange: () => void) {
-  const id = window.setInterval(onStoreChange, 1000);
-  return () => window.clearInterval(id);
-}
-
-function getClockSnapshot() {
-  return Date.now();
-}
-
 export function TypingIndicator({ channelId }: TypingIndicatorProps) {
   const currentUserId = useAuthStore((state) => state.user?.id);
-  const typingUsers = useTypingStore(
-    (state) => state.typingByChannel[channelId] ?? [],
+  const pruneExpired = useTypingStore((state) => state.pruneExpired);
+  const typingUsers = useTypingStore((state) =>
+    selectChannelTypers(state, channelId),
   );
-  const now = useSyncExternalStore(subscribeToClock, getClockSnapshot, () => 0);
+
+  useEffect(() => {
+    pruneExpired();
+    const id = window.setInterval(pruneExpired, 1000);
+    return () => window.clearInterval(id);
+  }, [pruneExpired]);
 
   const activeTypers = typingUsers.filter(
-    (entry) => entry.expiresAt > now && entry.userId !== currentUserId,
+    (entry) => entry.userId !== currentUserId,
   );
 
   if (activeTypers.length === 0) return null;
